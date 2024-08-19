@@ -7,7 +7,10 @@ import keyboard
 import pytesseract
 from pushbullet import PushBullet
 
-pb= PushBullet(api_key="api key")
+key= input("insert api key:")
+
+
+pb= PushBullet(api_key=f'{key}')
 iconWin= 'icons/2.PNG'
 iconCross= 'icons/3.PNG'
 iconTrade = 'icons/1.PNG'
@@ -52,8 +55,9 @@ def search_icons(icon):
             notif_txt = txt_to_img(chatbase)
             send("platininha",notif_txt)
             time.sleep(0.25) 
-            pyautogui.typewrite("sure, 1 sec")
-            keyboard.press_and_release('enter')     
+            pyautogui.typewrite('sure, 1 sec')
+            keyboard.press_and_release('enter')
+                
             inicialize(start)                        
     except Exception as e:    
         return False
