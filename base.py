@@ -57,6 +57,8 @@ def search_icons(icon):
             localization = pyautogui.locateCenterOnScreen(icon, region=areatrade, confidence=0.92)
             if localization:
                 pyautogui.moveTo(localization)
+                time.sleep(0.25)
+                pyautogui.click()
                 time.sleep(1)
                 pyautogui.mouseDown(); pyautogui.mouseUp()
                 time.sleep(0.25)
@@ -67,7 +69,9 @@ def search_icons(icon):
                 pyautogui.typewrite('Sure, 1 sec')
                 keyboard.press_and_release('enter')
                
-                initialize(start)
+                print("press k to restart")
+                keyboard.wait('k')
+                print('restarting...')
         except Exception as e:    
             return False
 
