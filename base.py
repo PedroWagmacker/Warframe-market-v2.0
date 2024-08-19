@@ -7,30 +7,31 @@ import keyboard
 import pytesseract
 from pushbullet import PushBullet
 
-pb= PushBullet(api_key="your api key")
-icon1= 'icons/2.PNG'
-icon2= 'icons/3.PNG'
-start= 'f1'
+pb= PushBullet(api_key="api key")
+iconWin= 'icons/2.PNG'
+iconCross= 'icons/3.PNG'
+iconTrade = 'icons/1.PNG'
+iconChat= 'icons/4.PNG'
+start= 'k'
 
 def inicialize(key):
     print(f"press {key} to start")
     keyboard.wait(key)
     print("starting")
 
-inicialize(start)
-
-chat= pyautogui.locateCenterOnScreen('icons/chat.PNG', confidence=0.8)
-base= pyautogui.locateCenterOnScreen('icons/1.PNG',confidence=0.95)
-chatbase= (int(chat[0]-20), int(chat[1]-20),500,500)
-areabase= (base[0]-20, base[1]-16,300,32)
-
-
-
-
+def search_chat_itens(ChatIcon,TradeIcon):
+ while True:
+  try:
+    chat =pyautogui.locateCenterOnScreen(iconChat, confidence=0.8)
+    trade =pyautogui.locateCenterOnScreen(iconTrade,confidence=0.95)
+    if iconChat is not None and iconTrade is not None:
+       return chat, trade
+  except:
+     print("chat not found, press K to restart")
+     keyboard.wait('k')
 
 def send(title,body):
     pb.push_note(title,body)
-
 
 def txt_to_img(region):
     screenshot = pyautogui.screenshot(region=region)
@@ -39,33 +40,36 @@ def txt_to_img(region):
     txt = str(pytesseract.image_to_string(screenshot))
     return txt
 
-
-
 def search_icons(icon):
+ while True:
     try:
-        localization = pyautogui.locateCenterOnScreen(icon,region=areabase,confidence=0.9)
+        localization = pyautogui.locateCenterOnScreen(icon,region=areatrade,confidence=0.8)
         if localization:
             pyautogui.moveTo(localization)
             time.sleep(1)
             pyautogui.mouseDown();pyautogui.mouseUp()
             time.sleep(0.25)
-            textin = txt_to_img(chatbase)
-            send("platininha",textin)
+            notif_txt = txt_to_img(chatbase)
+            send("platininha",notif_txt)
             time.sleep(0.25) 
             pyautogui.typewrite("sure, 1 sec")
-            keyboard.press_and_release('enter')                    
+            keyboard.press_and_release('enter')     
+            inicialize(start)                        
+    except Exception as e:    
+        return False
 
-            print("press f1 to restart")
-            keyboard.wait(start)
-            print("restarting")
-                    
 
-    except Exception:
-        pass
+inicialize(start)  
 
-    
+chat, trade = search_chat_itens(iconChat,iconTrade)
+chatbase= (int(chat[0]-20), int(chat[1]-20),500,500)
+areatrade= (trade[0]-20, trade[1]-16,370,32)
+
 while True:
-  
-  search_icons(icon1) or search_icons(icon2)
+  search_icons(iconWin) or search_icons(iconCross)
+  time.sleep(2)
+
+
+
       
-  time.sleep(3)
+      
