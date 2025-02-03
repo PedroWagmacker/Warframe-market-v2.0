@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 import keyboard
 import pytesseract
-from pushbullet import PushBullet
+
 
 def resource_path(relative_path):
     try:
@@ -15,8 +15,6 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
-key = input("Insert API key: ")
-pb = PushBullet(api_key=key)
 
 iconWin = resource_path('icons/2.PNG')
 iconCross = resource_path('icons/3.PNG')
@@ -41,8 +39,7 @@ def search_chat_items(iconChat, iconTrade):
             keyboard.wait('k')
             print('restarting...')
 
-def send_notification(title, body):
-    pb.push_note(title, body)
+
 
 def txt_to_img(region):
     screenshot = pyautogui.screenshot(region=region)
@@ -63,10 +60,9 @@ def search_icons(icon):
                 pyautogui.mouseDown(); pyautogui.mouseUp()
                 time.sleep(0.25)
                 notif_txt = txt_to_img(chatbase)
-                send_notification("Notification Title", notif_txt)
                 time.sleep(0.25) 
             
-                pyautogui.typewrite('Sure, 1 sec')
+                pyautogui.typewrite('jj')
                 keyboard.press_and_release('enter')
                
                 print("press k to restart")
